@@ -77,7 +77,7 @@ export default {
                 const clockinResults = await performClockIn(accessToken, env, clockinType)
                 
                 // 返回打卡结果页面
-                return new Response(getClockinResultPage(clockinResults), {
+                return new Response(getClockinResultPage(clockinResults, usernameFromPath), {
                     headers: {
                         'Content-Type': 'text/html;charset=UTF-8',
                     }
@@ -692,16 +692,70 @@ function getHtmlPage(accessToken) {
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
+            margin: 0;
+            padding: 0;
             background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
         .container {
             background-color: white;
             border-radius: 8px;
             padding: 30px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+            position: relative;
+        }
+        .github-link {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 80px;
+            height: 80px;
+            overflow: hidden;
+            z-index: 1000;
+            transition: width 0.3s, height 0.3s;
+        }
+        .github-link:hover {
+            width: 100px;
+            height: 100px;
+        }
+        .github-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 80px 80px 0;
+            border-color: transparent #333 transparent transparent;
+            box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2);
+            transition: border-width 0.3s, border-color 0.3s;
+        }
+        .github-link:hover::before {
+            border-width: 0 100px 100px 0;
+            border-color: transparent #007bff transparent transparent;
+        }
+        .github-icon {
+            position: absolute;
+            top: 15px;
+            right: 10px;
+            width: 24px;
+            height: 24px;
+            color: white;
+            z-index: 1;
+            transition: transform 0.3s, top 0.3s, right 0.3s, width 0.3s, height 0.3s;
+        }
+        .github-link:hover .github-icon {
+            transform: scale(1.2);
+            top: 20px;
+            right: 15px;
+            width: 28px;
+            height: 28px;
         }
         h1 {
             color: #333;
@@ -769,6 +823,11 @@ function getHtmlPage(accessToken) {
 </head>
 <body>
     <div class="container">
+        <a href="https://github.com/TianJiaJi/ZK-auto-clock-in" target="_blank" class="github-link">
+            <svg class="github-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+        </a>
         <h1>足下教育平台 - Access Token</h1>
         <div class="success-message" id="successMessage">Access Token已复制到剪贴板！</div>
         <div class="token-container" id="tokenContainer">${accessToken}</div>
@@ -819,7 +878,7 @@ function getHtmlPage(accessToken) {
  * 生成打卡结果页面
  * @param {Object} clockinResults 打卡结果
  */
-function getClockinResultPage(clockinResults) {
+function getClockinResultPage(clockinResults, userId) {
     const homeResult = clockinResults.home;
     const sportsResult = clockinResults.sports;
     const dailyResult = clockinResults.daily;
@@ -846,16 +905,70 @@ function getClockinResultPage(clockinResults) {
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
+            margin: 0;
+            padding: 0;
             background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
         .container {
             background-color: white;
             border-radius: 8px;
             padding: 30px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+            position: relative;
+        }
+        .github-link {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 80px;
+            height: 80px;
+            overflow: hidden;
+            z-index: 1000;
+            transition: width 0.3s, height 0.3s;
+        }
+        .github-link:hover {
+            width: 100px;
+            height: 100px;
+        }
+        .github-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 80px 80px 0;
+            border-color: transparent #333 transparent transparent;
+            box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2);
+            transition: border-width 0.3s, border-color 0.3s;
+        }
+        .github-link:hover::before {
+            border-width: 0 100px 100px 0;
+            border-color: transparent #007bff transparent transparent;
+        }
+        .github-icon {
+            position: absolute;
+            top: 15px;
+            right: 10px;
+            width: 24px;
+            height: 24px;
+            color: white;
+            z-index: 1;
+            transition: transform 0.3s, top 0.3s, right 0.3s, width 0.3s, height 0.3s;
+        }
+        .github-link:hover .github-icon {
+            transform: scale(1.2);
+            top: 20px;
+            right: 15px;
+            width: 28px;
+            height: 28px;
         }
         h1 {
             color: #333;
@@ -916,6 +1029,11 @@ function getClockinResultPage(clockinResults) {
 </head>
 <body>
     <div class="container">
+        <a href="https://github.com/TianJiaJi/ZK-auto-clock-in" target="_blank" class="github-link">
+            <svg class="github-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+        </a>
         <h1>足下教育平台 - 打卡结果</h1>
         
         <div class="result-item ${homeResult.success ? 'success' : 'error'}">
@@ -937,7 +1055,7 @@ function getClockinResultPage(clockinResults) {
         </div>
         
         <div class="button-container">
-            <button class="back-button" onclick="window.location.href='/'">返回首页</button>
+            <button class="back-button" onclick="window.location.href='/${userId}'">返回首页</button>
         </div>
     </div>
 </body>
