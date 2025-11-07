@@ -3,9 +3,16 @@ main = "worker.js"
 compatibility_date = "2023-12-01"
 
 [vars]
-# 在这里设置环境变量，或者使用wrangler secret命令设置
-# ZU_XIA_USERNAME = "530XXXXXXXXXXXXXXX"
-# ZU_XIA_PASSWORD = "0XXXXX"
+# 日志控制设置
+ENABLE_LOGGING = "false"  # 设置为 "true" 启用日志输出，设置为 "false" 禁用日志输出
+
+# 打卡内容设置
+SPORTS_COMMENT = "特色"  # 运动打卡内容，默认为"特色"
+DAILY_COMMENT = "今日学习内容总结，收获满满！"  # 日精进打卡内容，默认为"今日学习内容总结，收获满满！"
+
+# 登录信息设置
+#ZU_XIA_USERNAME = "530XXXXXXXXXXXXXXX"
+#ZU_XIA_PASSWORD = "0XXXXX"
 
 # 本地开发配置
 [env.development]
