@@ -1,4 +1,4 @@
-name = "zuxia-login"
+name = "zk-auto-clock-in"
 main = "worker.js"
 compatibility_date = "2023-12-01"
 
