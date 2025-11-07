@@ -1,0 +1,12 @@
+name = "zuxia-login"
+main = "worker.js"
+compatibility_date = "2023-12-01"
+
+[vars]
+# 在这里设置环境变量，或者使用wrangler secret命令设置
+# ZU_XIA_USERNAME = "530XXXXXXXXXXXXXXX"
+# ZU_XIA_PASSWORD = "0XXXXX"
+
+# 本地开发配置
+[env.development]
+name = "zuxia-login-dev"

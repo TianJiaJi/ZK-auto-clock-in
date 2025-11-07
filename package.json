@@ -1,0 +1,23 @@
+{
+  "name": "zuxia-auto-login",
+  "version": "1.0.0",
+  "description": "足下教育平台自动登录脚本",
+  "main": "worker.js",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "secret:username": "wrangler secret put ZU_XIA_USERNAME",
+    "secret:password": "wrangler secret put ZU_XIA_PASSWORD"
+  },
+  "keywords": [
+    "cloudflare",
+    "workers",
+    "login",
+    "automation"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "wrangler": "^4.46.0"
+  }
+}
