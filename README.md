@@ -51,7 +51,7 @@ npm install
 示例配置：
 ```ini
 # 足下平台账号信息
-ZU_XIA_USERNAME=你的身份证号
+ZU_XIA_USERNAME=你的账号
 ZU_XIA_PASSWORD=你的密码
 
 # 打卡内容（可选）
@@ -83,12 +83,12 @@ npx wrangler deploy
 访问URL时，必须在URL后面添加正确的用户名路径：
 
 ```
-https://zuxia-login.你的账户ID.workers.dev/你的身份证号
+https://zuxia-login.你的账户ID.workers.dev/你的账号
 ```
 
 例如：
 ```
-https://zuxia-login.13888984805.workers.dev/530XXXXXXXXXXXXXXX
+https://zuxia-login.13888984805.workers.dev/530XXXXXX
 ```
 
 ### 2. 获取Access Token
