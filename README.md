@@ -40,6 +40,15 @@ npm install
 
 复制`.dev.vars`文件并修改以下环境变量：
 
+| 环境变量 | 必需 | 默认值 | 说明 |
+|---------|------|--------|------|
+| ZU_XIA_USERNAME | 是 | 无 | 足下平台的用户名（身份证号） |
+| ZU_XIA_PASSWORD | 是 | 无 | 足下平台的密码 |
+| SPORTS_COMMENT | 否 | "特色" | 运动打卡的评论内容 |
+| DAILY_COMMENT | 否 | "今日学习内容总结，收获满满！" | 日精进打卡的评论内容 |
+| ENABLE_LOGGING | 否 | "true" | 是否启用日志输出（true/false） |
+
+示例配置：
 ```ini
 # 足下平台账号信息
 ZU_XIA_USERNAME=你的身份证号
