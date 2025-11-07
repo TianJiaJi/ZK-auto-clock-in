@@ -83,6 +83,52 @@ export default {
                 }
             })
         }
+    },
+    
+    // 添加定时触发事件处理器
+    async scheduled(event, env, ctx) {
+        // 设置日志控制变量
+        enableLogging = env?.ENABLE_LOGGING === "true";
+        
+        logIfEnabled('=== 定时打卡任务开始 ===')
+        logIfEnabled('定时触发时间:', new Date().toISOString())
+        
+        try {
+            // 获取登录凭证
+            const loginResult = await getLoginToken(env)
+            
+            logIfEnabled('=== 登录响应 ===')
+            logIfEnabled('Status:', loginResult.status)
+            
+            // 解析响应获取access_token
+            const loginData = await loginResult.json()
+            const accessToken = loginData.access_token
+            
+            // 执行自动打卡
+            const clockinResults = await performClockIn(accessToken, env, 'all')
+            
+            // 记录打卡结果
+            logIfEnabled('=== 自动打卡结果 ===')
+            logIfEnabled('首页打卡:', clockinResults.home.success ? '成功' : '失败 - ' + clockinResults.home.message)
+            logIfEnabled('运动打卡:', clockinResults.sports.success ? '成功' : '失败 - ' + clockinResults.sports.message)
+            logIfEnabled('日精进打卡:', clockinResults.daily.success ? '成功' : '失败 - ' + clockinResults.daily.message)
+            
+            // 如果有失败的打卡，可以在这里添加通知逻辑
+            const failedTasks = []
+            if (!clockinResults.home.success) failedTasks.push('首页')
+            if (!clockinResults.sports.success) failedTasks.push('运动')
+            if (!clockinResults.daily.success) failedTasks.push('日精进')
+            
+            if (failedTasks.length > 0) {
+                logIfEnabled(`以下打卡任务失败: ${failedTasks.join(', ')}`)
+            } else {
+                logIfEnabled('所有打卡任务均成功完成')
+            }
+            
+            logIfEnabled('=== 定时打卡任务完成 ===')
+        } catch (error) {
+            errorIfEnabled('定时打卡过程中发生错误:', error)
+        }
     }
 }
 

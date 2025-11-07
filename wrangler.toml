@@ -2,9 +2,13 @@ name = "zuxia-login"
 main = "worker.js"
 compatibility_date = "2023-12-01"
 
+# 添加定时触发器配置
+[triggers]
+crons = ["0 1 * * *"]  # 每天凌晨1点触发（UTC时间，对应中国时间上午9点）
+
 [vars]
 # 日志控制设置
-ENABLE_LOGGING = "false"  # 设置为 "true" 启用日志输出，设置为 "false" 禁用日志输出
+ENABLE_LOGGING = "true"  # 设置为 "true" 启用日志输出，设置为 "false" 禁用日志输出
 
 # 打卡内容设置
 SPORTS_COMMENT = "特色"  # 运动打卡内容，默认为"特色"
