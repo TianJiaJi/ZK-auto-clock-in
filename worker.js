@@ -32,12 +32,30 @@ export default {
         enableLogging = env?.ENABLE_LOGGING === "true";
         
         const url = new URL(request.url)
+        
+        // 从URL路径中提取用户名
+        const pathSegments = url.pathname.split('/').filter(segment => segment.length > 0);
+        const usernameFromPath = pathSegments.length > 0 ? pathSegments[0] : null;
+        
+        // 获取环境变量中的用户名
+        const envUsername = env?.ZU_XIA_USERNAME;
+        
+        // 验证用户名
+        if (!usernameFromPath || !envUsername || usernameFromPath !== envUsername) {
+            return new Response(getNginx404Page(), {
+                status: 404,
+                headers: {
+                    'Content-Type': 'text/html;charset=UTF-8',
+                }
+            });
+        }
 
         // 输出请求信息到控制台
         logIfEnabled('=== 请求信息 ===')
         logIfEnabled('URL:', url.href)
         logIfEnabled('Method:', request.method)
         logIfEnabled('Headers:', Object.fromEntries(request.headers.entries()))
+        logIfEnabled('用户名:', usernameFromPath)
 
         try {
             // 获取登录凭证
@@ -923,6 +941,40 @@ function getClockinResultPage(clockinResults) {
     </div>
 </body>
 </html>
+`
+}
+
+/**
+ * 生成nginx风格的404错误页面
+ */
+function getNginx404Page() {
+    return `
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+
 `
 }
 
