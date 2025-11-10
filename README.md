@@ -88,7 +88,7 @@ https://zuxia-login.你的账户ID.workers.dev/你的账号
 
 例如：
 ```
-https://zuxia-login.tianjiaji.workers.dev/530XXXXXX
+https://zuxia-login.tianjiaji.workers.dev/530XXXXXXX
 ```
 
 ### 2. 获取Access Token
